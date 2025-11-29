@@ -73,12 +73,6 @@ You will also need `curl`, `jq`, `wget`, and `screen`.
 
 ## Scripts Guide
 
-First, make the scripts executable:
-
-```bash
-chmod +x download.sh minecraft.sh
-```
-
 ---
 
 ### `download.sh`
