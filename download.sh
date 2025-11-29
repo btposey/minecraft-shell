@@ -10,8 +10,14 @@
 
 set -e # Exit immediately if a command exits with a non-zero status.
 
+# --- Load Environment Configuration ---
+if [ -f ".env" ]; then
+    source ".env"
+fi
+
 # --- Default Configuration ---
-TARGET_VERSION="latest"
+# Priority: Command-line flag > .env variable > default
+TARGET_VERSION=${MC_VERSION:-"latest"}
 
 # --- Function for Usage Info ---
 usage() {

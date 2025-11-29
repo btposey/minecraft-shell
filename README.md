@@ -9,6 +9,24 @@ A collection of shell scripts to simplify the management of a Minecraft: Java Ed
 -   **Interactive Console**: Easily attach to the live server console to monitor logs and run admin commands.
 -   **Secure by Design**: Designed to be run by a non-root user, enhancing server security.
 
+## Configuration (`.env` file)
+
+This project uses a `.env` file to store persistent configuration for your server. To get started, run the interactive setup script:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+This will ask for your desired Minecraft version and memory allocation and will generate the `.env` file for you.
+
+The following variables are supported:
+
+-   `MC_VERSION`: The version of the Minecraft server to download. This can be a specific version number (e.g., `1.18.2`) or `latest` for the newest stable release.
+-   `MC_MEMORY`: The maximum memory (in Gigabytes) to allocate to the server (e.g., `4`). This controls the `-Xmx` Java flag.
+
+The settings in the `.env` file serve as defaults. You can still override the version temporarily by using the `-v` flag in the `download.sh` script.
+
 ## Prerequisites
 
 These scripts require a Java runtime and several command-line utilities to function correctly.

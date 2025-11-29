@@ -9,6 +9,11 @@
 # Place this script in the same directory as your server.jar.
 # =============================================================================
 
+# --- Load Environment Configuration ---
+if [ -f ".env" ]; then
+    source ".env"
+fi
+
 # --- Configuration ---
 # Name for the screen session (must be unique)
 SESSION_NAME="minecraft_server"
@@ -17,9 +22,10 @@ SESSION_NAME="minecraft_server"
 JAR_FILE="server.jar"
 
 # Java VM options. -Xmx sets max RAM, -Xms sets initial RAM.
-# Adjust these values based on your server's available memory.
-# e.g., "4G" for 4 Gigabytes, "1024M" for 1024 Megabytes.
-JAVA_OPTS="-Xmx2G -Xms1G"
+# The -Xmx value is controlled by the MC_MEMORY variable in .env
+MC_MEMORY_DEFAULT="2"
+MAX_MEM="${MC_MEMORY:-$MC_MEMORY_DEFAULT}G"
+JAVA_OPTS="-Xmx${MAX_MEM} -Xms1G"
 
 # Command to start the server. The 'nogui' is crucial for server environments.
 START_COMMAND="java ${JAVA_OPTS} -jar ${JAR_FILE} nogui"

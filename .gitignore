@@ -1,3 +1,6 @@
+# Ignore the .env
+.env
+
 # Ignore the Minecraft server.jar
 **/*.jar
 
