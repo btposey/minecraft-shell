@@ -9,24 +9,6 @@ A collection of shell scripts to simplify the management of a Minecraft: Java Ed
 -   **Interactive Console**: Easily attach to the live server console to monitor logs and run admin commands.
 -   **Secure by Design**: Designed to be run by a non-root user, enhancing server security.
 
-## Configuration (`.env` file)
-
-This project uses a `.env` file to store persistent configuration for your server. To get started, run the interactive setup script:
-
-```bash
-chmod +x setup.sh
-./setup.sh
-```
-
-This will ask for your desired Minecraft version and memory allocation and will generate the `.env` file for you.
-
-The following variables are supported:
-
--   `MC_VERSION`: The version of the Minecraft server to download. This can be a specific version number (e.g., `1.18.2`) or `latest` for the newest stable release.
--   `MC_MEMORY`: The maximum memory (in Gigabytes) to allocate to the server (e.g., `4`). This controls the `-Xmx` Java flag.
-
-The settings in the `.env` file serve as defaults. You can still override the version temporarily by using the `-v` flag in the `download.sh` script.
-
 ## Prerequisites
 
 These scripts require a Java runtime and several command-line utilities to function correctly.
@@ -86,10 +68,27 @@ You will also need `curl`, `jq`, `wget`, and `screen`.
     ```bash
     brew install jq wget screen
     ```
-    *(Note: `curl` is typically pre-installed on macOS).*
-
 
 ## Scripts Guide
+
+### `setup.sh` (Server Configuration)
+
+This project uses a `.env` file to store persistent configuration for your server. To get started, run the interactive setup script:
+
+```bash
+./setup.sh
+```
+
+This will ask for your desired Minecraft version and memory allocation and will generate the `.env` file for you.
+
+#### Environment Variables
+
+The following variables are supported:
+
+-   `MC_VERSION`: The version of the Minecraft server to download. This can be a specific version number (e.g., `1.18.2`) or `latest` for the newest stable release.
+-   `MC_MEMORY`: The maximum memory (in Gigabytes) to allocate to the server (e.g., `4`). This controls the `-Xmx` Java flag.
+
+The settings in the `.env` file serve as defaults.
 
 ---
 
@@ -103,13 +102,15 @@ This script downloads the official `server.jar` file from Mojang. It's the first
     ```bash
     ./download.sh
     ```
-    This will create a `server.jar` file in your current directory.
+    This will create a `server.jar` file in your current directory. The script downloads the latest version or the version specified by the `MC_VERSION` variable in the `.env` file.
 
 -   **To download a specific version:**
     Use the `-v` flag followed by the version number.
     ```bash
     ./download.sh -v 1.18.2
     ```
+    
+    Using the `-v` flag in the `download.sh` script overrides the `MC_VERSION` variable in the `.env` file.
 
 -   **To display help:**
     ```bash
@@ -129,9 +130,8 @@ Before using this script, you may want to adjust the configuration variables at 
 -   `SESSION_NAME`: The unique name for the `screen` session. You generally don't need to change this.
 -   `JAR_FILE`: The name of your server JAR file. Defaults to `server.jar`.
 -   `JAVA_OPTS`: The Java Virtual Machine options, most importantly the memory allocation.
-    -   `-Xmx2G` sets the maximum RAM to 2 Gigabytes.
+    -   `-Xmx2G` sets the maximum RAM to 2 Gigabytes or the maximum set by the `MC_MEMORY` variable in the `.env` file.
     -   `-Xms1G` sets the initial RAM to 1 Gigabyte.
-    -   **You should adjust these values based on your server's available RAM and expected player count.**
 
 **Usage**
 
@@ -166,12 +166,7 @@ Before using this script, you may want to adjust the configuration variables at 
 
 ## Quick Start Workflow
 
-
-
 1.  **Clone this repository** and `cd` into the directory.
-
-
-
 2.  **Download the server JAR**:
 
     ```bash
@@ -179,9 +174,6 @@ Before using this script, you may want to adjust the configuration variables at 
     ./download.sh
 
     ```
-
-
-
 3.  **Start your server**:
 
     ```bash
