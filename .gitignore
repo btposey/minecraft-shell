@@ -1,1 +1,13 @@
+# Ignore the Minecraft server.jar
 **/*.jar
+
+# Ignore the Minecraft server files and directories
+banned-ips.json
+banned-players.json
+logs/
+ops.json
+server.properties
+usercache.json
+whitelist.json
+world/
+
