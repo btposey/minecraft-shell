@@ -29,12 +29,23 @@ DEFAULT_MEMORY=${MC_MEMORY:-"2"}
 read -p "Enter memory size in GB (e.g., 4) [Default: $DEFAULT_MEMORY]: " USER_MEMORY
 MC_MEMORY=${USER_MEMORY:-$DEFAULT_MEMORY}
 
+# --- Prompt for NeoForge ---
+read -p "Use NeoForge? (y/N): " USE_NEOFORGE
+if [[ "$USE_NEOFORGE" =~ ^[Yy]$ ]]; then
+    read -p "Enter NeoForge version: " USER_NEOFORGE_VERSION
+    MC_USE_NEOFORGE=${USER_NEOFORGE_VERSION}
+else
+    MC_USE_NEOFORGE="FALSE"
+fi
+
 # --- Write to .env file ---
 echo
 echo "Saving configuration to $ENV_FILE..."
 echo "# Minecraft Server Configuration" > "$ENV_FILE"
 echo "MC_VERSION=$MC_VERSION" >> "$ENV_FILE"
 echo "MC_MEMORY=$MC_MEMORY" >> "$ENV_FILE"
+echo "MC_USE_NEOFORGE=$MC_USE_NEOFORGE" >> "$ENV_FILE"
+
 
 echo "Configuration saved:"
 cat "$ENV_FILE"

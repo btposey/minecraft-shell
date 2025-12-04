@@ -4,6 +4,9 @@
 # Ignore the Minecraft server.jar
 **/*.jar
 
+# Ignore log files
+*.log
+
 # Ignore the Minecraft server files and directories
 banned-ips.json
 banned-players.json
@@ -14,3 +17,10 @@ usercache.json
 whitelist.json
 world/
 
+# Ignore NeoForge files
+config/
+libraries/
+user_jvm_args.*
+neoforge-installer.jar
+run.bat
+run.sh
