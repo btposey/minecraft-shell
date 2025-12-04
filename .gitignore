@@ -1,3 +1,6 @@
+# Jetbrains
+.idea
+
 # Ignore the .env
 .env
 
