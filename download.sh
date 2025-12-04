@@ -47,6 +47,48 @@ while getopts "v:h" opt; do
 done
 
 # --- Main Script ---
+
+if [ -n "$MC_USE_NEOFORGE" ] && [ "$MC_USE_NEOFORGE" != "FALSE" ]; then
+    echo "NeoForge version specified: $MC_USE_NEOFORGE. Starting NeoForge server download and installation."
+
+    NEOFORGE_VERSION=$MC_USE_NEOFORGE
+    INSTALLER_URL="https://maven.neoforged.net/releases/net/neoforged/neoforge/${NEOFORGE_VERSION}/neoforge-${NEOFORGE_VERSION}-installer.jar"
+    INSTALLER_JAR="neoforge-installer.jar"
+
+    echo "Downloading NeoForge installer from $INSTALLER_URL..."
+    wget --progress=bar:force:noscroll -O "$INSTALLER_JAR" "$INSTALLER_URL"
+
+    if [ $? -ne 0 ]; then
+        echo "Error: wget failed to download the NeoForge installer." >&2
+        echo "Please check the version number and your internet connection." >&2
+        rm -f "$INSTALLER_JAR"
+        exit 1
+    fi
+
+    echo "Download complete. Running installer..."
+    java -jar "$INSTALLER_JAR" --installServer
+
+    if [ $? -ne 0 ]; then
+        echo "Error: NeoForge installer failed." >&2
+        rm -f "$INSTALLER_JAR"
+        exit 1
+    fi
+
+    echo "Installation complete. Cleaning up installer..."
+    rm -f "$INSTALLER_JAR"
+
+    if [ -f "user_jvm_args.txt" ]; then
+        echo "Configuring server memory..."
+        sed -i.bak "s/.*-Xmx[0-9]\+G.*/-Xmx${MC_MEMORY:-2}G/" user_jvm_args.txt
+        echo "Memory configured in user_jvm_args.txt."
+    else
+        echo "Warning: user_jvm_args.txt not found. Cannot configure memory automatically."
+    fi
+
+    echo "NeoForge server setup is complete."
+    exit 0
+fi
+
 echo "Verifying required tools (curl, jq, wget)..."
 for tool in curl jq wget; do
   if ! command -v $tool &> /dev/null; then
