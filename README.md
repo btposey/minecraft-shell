@@ -184,3 +184,7 @@ Before using this script, you may want to adjust the configuration variables at 
     ```
 
     Your server is now running in the background!
+## Resources
+
+* [Minecraft Wiki - Server Properties Configuration](https://minecraft.fandom.com/wiki/Server.properties)
+* [NeoForge - Installing a NeoForge Server](https://docs.neoforged.net/user/docs/server/)
