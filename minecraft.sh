@@ -28,7 +28,11 @@ MAX_MEM="${MC_MEMORY:-$MC_MEMORY_DEFAULT}G"
 JAVA_OPTS="-Xmx${MAX_MEM} -Xms1G"
 
 # Command to start the server. The 'nogui' is crucial for server environments.
-START_COMMAND="java ${JAVA_OPTS} -jar ${JAR_FILE} nogui"
+if [ -n "$MC_USE_NEOFORGE" ] && [ "$MC_USE_NEOFORGE" != "FALSE" ]; then
+    START_COMMAND="./run.sh"
+else
+    START_COMMAND="java ${JAVA_OPTS} -jar ${JAR_FILE} nogui"
+fi
 
 # --- Script Logic ---
 

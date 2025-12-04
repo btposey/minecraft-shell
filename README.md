@@ -87,6 +87,7 @@ The following variables are supported:
 
 -   `MC_VERSION`: The version of the Minecraft server to download. This can be a specific version number (e.g., `1.18.2`) or `latest` for the newest stable release.
 -   `MC_MEMORY`: The maximum memory (in Gigabytes) to allocate to the server (e.g., `4`). This controls the `-Xmx` Java flag.
+-   `MC_USE_NEOFORGE`: Set to `FALSE` by default. If you want to use NeoForge, set this to the version you wish to use (e.g., `21.4.111-beta`).
 
 The settings in the `.env` file serve as defaults.
 
@@ -94,15 +95,15 @@ The settings in the `.env` file serve as defaults.
 
 ### `download.sh`
 
-This script downloads the official `server.jar` file from Mojang. It's the first step to setting up your server.
+This script downloads the official `server.jar` file from Mojang or a NeoForge server, if configured. It's the first step to setting up your server.
 
 **Usage**
 
--   **To download the latest stable version of the server:**
+-   **To download the server:**
     ```bash
     ./download.sh
     ```
-    This will create a `server.jar` file in your current directory. The script downloads the latest version or the version specified by the `MC_VERSION` variable in the `.env` file.
+    If `MC_USE_NEOFORGE` is set in your `.env` file, this will download and install the specified NeoForge version. Otherwise, it will download the vanilla Minecraft server version specified by `MC_VERSION`.
 
 -   **To download a specific version:**
     Use the `-v` flag followed by the version number.
